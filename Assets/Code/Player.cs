@@ -22,7 +22,6 @@ public class Player : MonoBehaviour {
     
     private void Update()
     {
-
         Vector3 movement = InputController.instance.stick * speed * Time.deltaTime;
 
         transform.position = transform.position + movement;
