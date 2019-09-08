@@ -7,5 +7,13 @@ namespace Code
         public IMovementBehaviour _movementBehaviour;
         public IAttackBehaviour _AttackBehaviour;
         
+        public Transform player;
+
+        protected Vector3 SearchPlayer(){
+            Vector3 distance = player.position - transform.position;
+            distance.z = 0;
+
+            return distance;
+        }
     }
 }
