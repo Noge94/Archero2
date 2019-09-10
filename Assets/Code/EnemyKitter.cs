@@ -17,19 +17,45 @@ namespace Code
 
         private void Move(Vector3 distance){
             Vector3 movement = distance / distance.magnitude * speed * Time.deltaTime;
-            //movement = Dodge(movement, dodgeDirection);
-            transform.position += movement; 
+            movement = Dodge(movement, dodgeDirection);
+            if (distance.magnitude < 5)
+            {
+               movement = Retreat(movement, distance);
+            } else {
+                if (distance.magnitude > 10)
+                {
+                    movement = Approach(movement, distance);
+                }
+            }
+            transform.position += movement;
         }
 
         private Vector3 Dodge(Vector3 movement, int direction){
+            float intermediate = movement.x;
             if (direction == 0){
                 movement.x = movement.y;
-                movement.y = -movement.x;
+                movement.y = -intermediate;
             } else {
                 movement.x = -movement.y;
-                movement.y = movement.x;
+                movement.y = intermediate;
             }
             
+            return movement;
+        }
+
+        private Vector3 Retreat(Vector3 movement, Vector3 distance){
+            
+            Vector3 direction = distance.normalized;
+            movement = -direction * 0.6f + movement * 0.4f; 
+
+            return movement;
+        }
+
+        private Vector3 Approach(Vector3 movement, Vector3 distance){
+            
+            Vector3 direction = distance.normalized;
+            movement = direction * 0.5f + movement * 0.5f; 
+
             return movement;
         }
 
